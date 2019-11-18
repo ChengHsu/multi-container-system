@@ -1,17 +1,13 @@
-FROM python:3.6.1
+FROM python:3
 
-# set working directory
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+EXPOSE 5000
 
-# add requirements (to leverage Docker cache)
-ADD ./requirements.txt /usr/src/app/requirements.txt
+RUN mkdir /app
+WORKDIR /app
 
-# install requirements
+COPY requirements.txt /app/requirements.txt
 RUN pip install -r requirements.txt
 
-# add app
-ADD . .
+COPY . /app
 
-# run server
-CMD python manage.py runserver -h 0.0.0.0
+CMD python app.py

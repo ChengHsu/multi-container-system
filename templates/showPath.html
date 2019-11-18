@@ -1,0 +1,24 @@
+<html>
+    <head>
+	<title>Paths Table</title>
+    </head>
+	<h3>Show paths in ascending lexicographical order with counts</h3>
+    <body>
+	<table>
+	    <thead>
+		<tr>
+		    <th>Path</th>
+		    <th>Count</th>
+		</tr>
+	    </thead>
+	    <tbody>
+	    {% for path_cnt in pathcount %}
+		<tr>
+		    <td>{{ path_cnt.path }}</td>
+		    <td>{{ path_cnt.count }}</td>
+		</tr>
+	    {% endfor %}
+	    </tbody>
+	</table>
+
+</html>

@@ -1,10 +1,8 @@
 version: '2.1'
-
 services:
-
-  users-db:
-    container_name: users-db
-    build: ./project/db
+  db:
+    container_name: db
+    build: ./db
     ports:
         - 5435:5432  # expose ports - HOST:CONTAINER
     environment:
@@ -13,19 +11,18 @@ services:
     healthcheck:
       test: exit 0
 
-  users-service:
-    container_name: users-service
+  service:
+    container_name: service
     build: ./
     volumes:
       - '.:/usr/src/app'
     ports:
-      - 5001:5000 # expose ports - HOST:CONTAINER
+      - 5000:5000 # expose ports - HOST:CONTAINER
     environment:
     - APP_SETTINGS=project.config.DevelopmentConfig
-    - DATABASE_URL=postgres://postgres:postgres@users-db:5432/users_dev
-    - DATABASE_TEST_URL=postgres://postgres:postgres@users-db:5432/users_test
+    - DATABASE_URL=postgres://postgres:postgres@db:5432/path_count
     depends_on:
-      users-db:
+      db:
         condition: service_healthy
     links:
-      - users-db
+      - db
